@@ -1,6 +1,7 @@
 import type { ClientFeaturesResponse, Context } from "unleash-client";
 import type { IToggle } from "unleash-proxy-client";
 import { ToggleEngine } from "./core/engine";
+import { Strategy } from "./core/client/strategy";
 
 /**
  * Turn server-side feature flags definitions (state from Unleash)
@@ -8,9 +9,10 @@ import { ToggleEngine } from "./core/engine";
  */
 export const evaluateFlags = (
   definitions: ClientFeaturesResponse,
-  context: Context = {}
+  context: Context = {},
+  customStrategies: Strategy[] = []
 ) => {
-  const engine = new ToggleEngine(definitions);
+  const engine = new ToggleEngine(definitions, customStrategies);
   const toggles: IToggle[] = [];
   const defaultContext: Context = {
     currentTime: new Date(),

@@ -47,10 +47,11 @@ export class ToggleEngine {
 
   segments: Map<number, Segment>;
 
-  constructor(rawFeatures: ClientFeaturesResponse) {
+  constructor(rawFeatures: ClientFeaturesResponse, strategies: Strategy[]) {
     this.features = processFeatures(rawFeatures);
     this.strategies = [...defaultStrategies];
     this.segments = processSegments(rawFeatures);
+    this.strategies = [...this.strategies, ...strategies];
   }
 
   private getStrategy(name: string): Strategy | undefined {
